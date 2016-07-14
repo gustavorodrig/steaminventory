@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="LayoutPadrao">
+
+<head>
+	<title>Steam Inventory</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Steam Inventory</h1>
+				<!--<a class="btn btn-link aw-link-panel" href="/titulos/novo">Novo título</a>-->
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<form method="POST" class="form-horizontal" th:action="@{/inventory/search}" th:object="${search}">
+				<div class="form-group">
+					<div class="col-sm-4">
+						<div class="input-group">
+							<input class="form-control" placeholder="Steam User or SteamID"
+								   autofocus="autofocus" th:field="${search.id}"/>
+	   						<span class="input-group-btn">
+	   							<button type="submit" class="btn btn-default">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+	   						</span>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<table class="table table-bordered table-striped">
+				<!--<thead>-->
+				<!--<tr>-->
+				<!--<th>URL</th>-->
+				<!--<th class="text-center col-md-2">name</th>-->
+				<!--<th class="col-md-1"></th>-->
+				<!--</tr>-->
+				<!--</thead>-->
+				<tbody>
+				<!--<img th:src="${'photoCat?idCat=' + cat.idCategorie}" />-->
+				<tr th:each="item : ${items}">
+				<tr>
+					<td class="col-md-1" ><img th:src="${item.imageURL}" style="width:90px;height:50px"/></td>
+					<td class="col-md-1" th:text="${item.name}"></td>
+					<td class="col-md-1" th:text="${item.price}"></td>
+				</tr>
+				</tr>
+				<tr>
+					<td colspan="6" th:if="${#lists.isEmpty(items)}">Search your inventory by SteamID or username</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html>
